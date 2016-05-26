@@ -1,0 +1,4 @@
+# Do not sync Visual Studio build results
+src/bin
+src/obj
+src/.vs
