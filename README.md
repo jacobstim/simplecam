@@ -34,3 +34,9 @@ Version | Date | Description
 
 Version 1.0
  * Win32 Executable: [ZIP](downloads/simplecam-1.0-win32.zip)
+
+## Legal & disclaimer
+
+By using this application you agree that you won't blame me for anything that goes wrong, including, but not limited to, explosions and zombie apocalypses(TM).
+
+Icon made by [FreePik](http://www.flaticon.com/authors/freepik) from [www.flaticon.com](www.flaticon.com).
