@@ -39,4 +39,4 @@ Version 1.0
 
 By using this application you agree that you won't blame me for anything that goes wrong, including, but not limited to: exploding harddisks, robot uprisings and zombie apocalypses(TM).
 
-Icon made by [FreePik](http://www.flaticon.com/authors/freepik) from [www.flaticon.com](www.flaticon.com), and is licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0).
+Icon made by [FreePik](http://www.flaticon.com/authors/freepik) from [www.flaticon.com](http://www.flaticon.com), and is licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0).
