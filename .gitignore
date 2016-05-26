@@ -1,4 +1,5 @@
 # Do not sync Visual Studio build results
-src/bin
+src/bin/Release/SimpleCam.*
+src/bin/Debug/SimpleCam.*
 src/obj
 src/.vs
