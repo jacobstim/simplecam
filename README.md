@@ -33,7 +33,7 @@ Version | Date | Description
 ## Downloads
 
 Version 1.0
- * Win32 Executable: [ZIP](downloads/simplecam-1.0-win32.zip)
+ * Win32 Executable: [ZIP](https://github.com/jacobstim/simplecam/files/285222/simplecam-1.0-win32.zip)
 
 ## Legal & disclaimer
 
