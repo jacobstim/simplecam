@@ -19,3 +19,15 @@ Currently implemented and working:
  
 Missing features that might appear one day:
  * Enumerate resolutions of each webcam. Now the resolution list & framerate is simply harcoded for the Ipevo P2V
+
+## Screenshots
+
+![Main User Interface](https://github.com/jacobstim/simplecam/screenshots/ui10.png)
+
+## Version History
+
+Version | Date | Description
+------------ | -------------
+1.0 | 26 May 2016 | First release
+
+## Downloads
