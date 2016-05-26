@@ -22,12 +22,15 @@ Missing features that might appear one day:
 
 ## Screenshots
 
-![Main User Interface](https://github.com/jacobstim/simplecam/screenshots/ui10.png)
+![Main User Interface](screenshots/ui10.png)
 
 ## Version History
 
 Version | Date | Description
------------- | -------------
+------------ | ------------- | -------------
 1.0 | 26 May 2016 | First release
 
 ## Downloads
+
+Version 1.0
+ * Win32 Executable: [ZIP](downloads/simplecam-1.0-win32.zip)
