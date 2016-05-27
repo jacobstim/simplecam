@@ -39,6 +39,8 @@
             this.minimalisticStyleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.maintainAspectRatioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resolutionBox = new System.Windows.Forms.ComboBox();
+            this.scaleToFitWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -87,7 +89,9 @@
             this.toolStripMenuItem2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.alwaysOnTopToolStripMenuItem,
             this.minimalisticStyleToolStripMenuItem,
-            this.maintainAspectRatioToolStripMenuItem});
+            this.toolStripSeparator1,
+            this.maintainAspectRatioToolStripMenuItem,
+            this.scaleToFitWindowToolStripMenuItem});
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(61, 20);
             this.toolStripMenuItem2.Text = "Settings";
@@ -110,10 +114,10 @@
             // 
             // maintainAspectRatioToolStripMenuItem
             // 
-            this.maintainAspectRatioToolStripMenuItem.Enabled = false;
             this.maintainAspectRatioToolStripMenuItem.Name = "maintainAspectRatioToolStripMenuItem";
             this.maintainAspectRatioToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.maintainAspectRatioToolStripMenuItem.Text = "Maintain Aspect Ratio";
+            this.maintainAspectRatioToolStripMenuItem.Click += new System.EventHandler(this.toggleAspectRatio);
             // 
             // resolutionBox
             // 
@@ -125,6 +129,18 @@
             this.resolutionBox.Name = "resolutionBox";
             this.resolutionBox.Size = new System.Drawing.Size(121, 21);
             this.resolutionBox.TabIndex = 2;
+            // 
+            // scaleToFitWindowToolStripMenuItem
+            // 
+            this.scaleToFitWindowToolStripMenuItem.Name = "scaleToFitWindowToolStripMenuItem";
+            this.scaleToFitWindowToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.scaleToFitWindowToolStripMenuItem.Text = "Scale to Fit Window";
+            this.scaleToFitWindowToolStripMenuItem.Click += new System.EventHandler(this.toggleScaleToFit);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(187, 6);
             // 
             // Form1
             // 
@@ -159,6 +175,8 @@
         private System.Windows.Forms.ToolStripMenuItem minimalisticStyleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem maintainAspectRatioToolStripMenuItem;
         private System.Windows.Forms.ComboBox resolutionBox;
+        private System.Windows.Forms.ToolStripMenuItem scaleToFitWindowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 

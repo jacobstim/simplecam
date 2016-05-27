@@ -22,6 +22,8 @@ namespace MyWebCam
         Point oldPos;
         Size oldSize;
 
+        Size frameSize = new Size(640,480);                             // Default is 640x480
+
         int deviceNumber = 0;
 
         List<Button> btnArray = new List<Button>();
@@ -98,7 +100,17 @@ namespace MyWebCam
 
         private void Form1_ResizeEnd(object sender, EventArgs e)
         {
-            if(minimalisticStyleToolStripMenuItem.Checked)
+            positionSizePanel();
+        }
+
+
+      /*============================================================================
+        Calculate position & size of video panel based on settings & environment
+        ============================================================================ */
+
+        private void positionSizePanel()
+        {
+            if (minimalisticStyleToolStripMenuItem.Checked)
             {
                 panel1.Location = new Point(0, 0);
                 panel1.Width = this.ClientSize.Width;
@@ -106,24 +118,111 @@ namespace MyWebCam
             }
             else
             {
-                // Change panel to new size
-                panel1.Location = new Point(0, menuStrip1.Size.Height);
-                panel1.Width = this.ClientSize.Width;
-                panel1.Height = this.ClientSize.Height - menuStrip1.Size.Height;
+                // Calculate width & height that we can maximally occupy
+                int availableHeight = this.ClientSize.Height - menuStrip1.Size.Height;
+                int availableWidth = this.ClientSize.Width;
+
+                // Maintain aspect ratio?
+                if (maintainAspectRatioToolStripMenuItem.Checked)
+                {
+                    // Calculate aspect ratio of source
+                    float aspectRatio = (float)frameSize.Width / frameSize.Height;
+
+                    // Do we need to create horizontal or vertical bars?
+                    if (availableHeight * aspectRatio < availableWidth)
+                    {
+                        // There is enough width to maintain the aspect ratio of the source
+                        if (scaleToFitWindowToolStripMenuItem.Checked)
+                        {
+                            float scalingFactor = (float)frameSize.Height / availableHeight;
+                            int newWidth = (int)Math.Floor((float)frameSize.Width / scalingFactor);
+                            // Create vertical bars
+                            panel1.Location = new Point((availableWidth - newWidth) / 2, menuStrip1.Size.Height);
+                            panel1.Width = newWidth;
+                            panel1.Height = availableHeight;
+
+                        }
+                        else
+                        {
+                            float scalingFactor = (float)frameSize.Width / availableWidth;
+                            int newHeight = (int)Math.Floor((float)frameSize.Height / scalingFactor);
+                            // NO scale to fit, so we need to shift the video VERTICALLY (Y) to the center of the window
+                            // i.e. zoom panel
+                            panel1.Location = new Point(0, menuStrip1.Size.Height + (availableHeight - newHeight) / 2);
+                            panel1.Width = availableWidth;
+                            panel1.Height = newHeight;
+                        }
+                    }
+                    else
+                    {
+                        // There is not enough width to maintain the aspect ratio of the source
+                        if (scaleToFitWindowToolStripMenuItem.Checked)
+                        {
+                            float scalingFactor = (float)frameSize.Width / availableWidth;
+                            int newHeight = (int)Math.Floor((float)frameSize.Height / scalingFactor);
+                            // NO scale to fit, so we need to shift the video VERTICALLY (Y) to the center of the window
+                            // i.e. zoom panel
+                            panel1.Location = new Point(0, menuStrip1.Size.Height + (availableHeight - newHeight) / 2);
+                            panel1.Width = availableWidth;
+                            panel1.Height = newHeight;
+                        }
+                        else
+                        {
+                            float scalingFactor = (float)frameSize.Height / availableHeight;
+                            int newWidth = (int)Math.Floor((float)frameSize.Width / scalingFactor);
+                            // Create horizontal bars
+                            panel1.Location = new Point((availableWidth - newWidth) / 2, menuStrip1.Size.Height);
+                            panel1.Width = newWidth;
+                            panel1.Height = availableHeight;
+                        }
+
+
+                    }
+
+                }
+                else
+                {
+                    // Just rescale panel
+                    panel1.Location = new Point(0, menuStrip1.Size.Height);
+                    panel1.Width = availableWidth;
+                    panel1.Height = availableHeight;
+                }
             }
             panel1.Refresh();
         }
-
 
 
         /*============================================================================*/
 
         private void resolutionBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Stop current preview
-            stopPreview();
-            // Start again with the new resolution
-            preview(deviceNumber);
+            String[] selectSize = new String[2];
+
+            // Get framesize to use
+            if (resolutionBox.SelectedItem != null)
+            {
+                if (resolutionBox.SelectedItem.ToString().Length > 0)
+                {
+                    selectSize = (resolutionBox.SelectedItem.ToString().Split(' '))[0].Split('x');
+                }
+            }
+
+            int xSize = 0;
+            int ySize = 0;
+            if (Int32.TryParse(selectSize[0], out xSize))
+            {
+                if (Int32.TryParse(selectSize[1], out ySize))
+                {
+                    frameSize = new Size(xSize, ySize);
+                    // Stop current preview
+                    stopPreview();
+                    // Start again with the new resolution
+                    preview(deviceNumber);
+                }
+            }
+
+
+
         }
 
         /*============================================================================
@@ -147,29 +246,15 @@ namespace MyWebCam
             {
                 capture = new Capture(filters.VideoInputDevices[deviceNo], filters.AudioInputDevices[0]);
 
-                String[] selectSize = new String[2];
-
-                // Get framesize to use
-                if (resolutionBox.SelectedItem != null)
-                {
-                    if (resolutionBox.SelectedItem.ToString().Length > 0)
-                    {
-                        selectSize = (resolutionBox.SelectedItem.ToString().Split(' '))[0].Split('x');
-                    }
-                }
-
                 // Default value
-                capture.FrameSize = new Size(640,480);
-
-                int xSize = 0;
-                int ySize = 0;
-                if (Int32.TryParse(selectSize[0], out xSize))
+                capture.FrameSize = new Size(640, 480);
+                if (frameSize != null)
                 {
-                    if (Int32.TryParse(selectSize[1], out ySize))
+                    if ((frameSize.Width > 0) && (frameSize.Height > 0))
                     {
-                        capture.FrameSize = new Size(xSize, ySize);
+                        // Default value
+                        capture.FrameSize = frameSize;
                     }
-
                 }
                 capture.PreviewWindow = panel1;
 
@@ -283,6 +368,19 @@ namespace MyWebCam
                 this.ResumeLayout();
             }
         }
+
+        private void toggleAspectRatio(object sender, EventArgs e)
+        {
+            maintainAspectRatioToolStripMenuItem.Checked = !maintainAspectRatioToolStripMenuItem.Checked;
+            positionSizePanel();
+        }
+
+        private void toggleScaleToFit(object sender, EventArgs e)
+        {
+            scaleToFitWindowToolStripMenuItem.Checked = !scaleToFitWindowToolStripMenuItem.Checked;
+            positionSizePanel();
+        }
+
 
         private void aboutWindow(object sender, EventArgs e)
         {
