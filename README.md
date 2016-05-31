@@ -1,6 +1,6 @@
 # SimpleCam
 ## Not another webcam software...
-Due to a need of regularly giving presentations involving a webcam (I use the [Ipevo Point-To-View](http://www.ipevo.com/prods/Point-2-View-USB-Camera) for demo's of hardware & devices), I was on the lookout for a simple WebCam viewer that I can use to:
+Due to a need of regularly giving presentations involving a webcam (I use the [Ipevo P2V - Point-To-View](http://www.ipevo.com/prods/Point-2-View-USB-Camera) for demo's of hardware & devices), I was on the lookout for a simple WebCam viewer that I can use to:
  * Show live video from any WebCam connected to my system
  * Have absolutely no UI visible at all, except for the video stream itself
  * Have the option to select the input resolution
