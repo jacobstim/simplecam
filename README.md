@@ -10,12 +10,19 @@ The best match for my needs is the excellent [WebCam Viewer](http://www.bustatec
 
 SimpleCam is the result of one day of work after not immediately finding the software I need. I basically started from [the demo application of DashingQuill](https://dashingquill.wordpress.com/2012/06/27/capturing-webcam-using-directshow-net-library) and pimped it with elements of the sample code of [the DirectX.Capture library](http://www.codeproject.com/Articles/3566/DirectX-Capture-Class-Library) to get more or less what works for me.
 
+## Usage
+* Start the application and select the webcam that you want to see, using the buttons on the left bottom side of the screen; "0" is the first detected webcam, and other webcams (if any) are shown as buttons labeled "1", "2", etc... 
+* Resize and position the window such that your videostream is shown as you want it.
+* Enable the "AlwaysOnTop" mode (F11) and then "Minimalistic Mode" (F12) to get just the video stream shown on screen, all the time.
+
 ## Features
 Currently implemented and working:
  * Enumerates all DirectShow compatible webcams detected on the system - should be pretty much all of them.
  * Easy switching between webcams from the UI
  * AlwaysOnTop mode
- * Minimalistic mode
+ * Minimalistic mode - show only webcam video stream
+ * Maintain aspect ratio
+ * Scale To Fit window - to ensure all webcam content is visible inside the application
  
 Missing features that might appear one day:
  * Enumerate resolutions of each webcam. Now the resolution list & framerate is simply harcoded for the Ipevo P2V
@@ -29,8 +36,12 @@ Missing features that might appear one day:
 Version | Date | Description
 ------------ | ------------- | -------------
 1.0 | 26 May 2016 | First release
+1.1 | 31 May 2016 | Added "Maintain Aspect Ratio" and "Scale to fit" functionality
 
 ## Downloads
+
+Version 1.1
+ * Win32 Executable: [ZIP](https://github.com/jacobstim/simplecam/files/290950/simplecam-1.1-win32.zip)
 
 Version 1.0
  * Win32 Executable: [ZIP](https://github.com/jacobstim/simplecam/files/285222/simplecam-1.0-win32.zip)
