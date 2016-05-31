@@ -37,15 +37,17 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.alwaysOnTopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.minimalisticStyleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.maintainAspectRatioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.resolutionBox = new System.Windows.Forms.ComboBox();
-            this.scaleToFitWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.maintainAspectRatioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scaleToFitWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resolutionBox = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Location = new System.Drawing.Point(0, 27);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(448, 336);
@@ -73,14 +75,14 @@
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(116, 22);
             this.toolStripMenuItem3.Text = "&About...";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.aboutWindow);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(116, 22);
             this.toolStripMenuItem4.Text = "E&xit";
             this.toolStripMenuItem4.Click += new System.EventHandler(this.exitProgram);
             // 
@@ -112,12 +114,24 @@
             this.minimalisticStyleToolStripMenuItem.Text = "Minimalist Mode";
             this.minimalisticStyleToolStripMenuItem.Click += new System.EventHandler(this.toggleWindowStyle);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(187, 6);
+            // 
             // maintainAspectRatioToolStripMenuItem
             // 
             this.maintainAspectRatioToolStripMenuItem.Name = "maintainAspectRatioToolStripMenuItem";
             this.maintainAspectRatioToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.maintainAspectRatioToolStripMenuItem.Text = "Maintain Aspect Ratio";
             this.maintainAspectRatioToolStripMenuItem.Click += new System.EventHandler(this.toggleAspectRatio);
+            // 
+            // scaleToFitWindowToolStripMenuItem
+            // 
+            this.scaleToFitWindowToolStripMenuItem.Name = "scaleToFitWindowToolStripMenuItem";
+            this.scaleToFitWindowToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.scaleToFitWindowToolStripMenuItem.Text = "Scale to Fit Window";
+            this.scaleToFitWindowToolStripMenuItem.Click += new System.EventHandler(this.toggleScaleToFit);
             // 
             // resolutionBox
             // 
@@ -130,18 +144,6 @@
             this.resolutionBox.Size = new System.Drawing.Size(121, 21);
             this.resolutionBox.TabIndex = 2;
             // 
-            // scaleToFitWindowToolStripMenuItem
-            // 
-            this.scaleToFitWindowToolStripMenuItem.Name = "scaleToFitWindowToolStripMenuItem";
-            this.scaleToFitWindowToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.scaleToFitWindowToolStripMenuItem.Text = "Scale to Fit Window";
-            this.scaleToFitWindowToolStripMenuItem.Click += new System.EventHandler(this.toggleScaleToFit);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(187, 6);
-            // 
             // Form1
             // 
             this.BackColor = System.Drawing.Color.Black;
@@ -152,7 +154,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "SimpleCam v1.0 - Tim Jacobs";
+            this.Text = "SimpleCam v1.1 - Tim Jacobs";
             this.Shown += new System.EventHandler(this.Form1_Shown);
             this.ResizeEnd += new System.EventHandler(this.Form1_ResizeEnd);
             this.Resize += new System.EventHandler(this.Form1_ResizeEnd);

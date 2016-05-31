@@ -39,10 +39,11 @@ namespace MyWebCam
 
         private void Form1_Shown(object sender, EventArgs e)
         {
-            // Ensure panel is at exactly the bottom of the menu bar
-            panel1.Location = new Point(0, menuStrip1.Size.Height);
-            panel1.Width = this.Width;
-            panel1.Height = this.ClientSize.Height - menuStrip1.Size.Height;
+            // Ensure panel is at the correct location for this Form configuration
+            //panel1.Location = new Point(0, menuStrip1.Size.Height);
+            //panel1.Width = this.Width;
+            //panel1.Height = this.ClientSize.Height - menuStrip1.Size.Height;
+            positionSizePanel();
 
             filters = new Filters();
 
@@ -110,83 +111,83 @@ namespace MyWebCam
 
         private void positionSizePanel()
         {
-            if (minimalisticStyleToolStripMenuItem.Checked)
+            // Calculate width & height that we can maximally occupy
+            int availableHeight = this.ClientSize.Height;
+            int availableWidth = this.ClientSize.Width;
+            int offsetHeight = 0;
+            int offsetWidth = 0;
+
+            if (!minimalisticStyleToolStripMenuItem.Checked)
             {
-                panel1.Location = new Point(0, 0);
-                panel1.Width = this.ClientSize.Width;
-                panel1.Height = this.ClientSize.Height;
+                // Standard mode, take into account menu bar that is visible, so we have less available height & we need to shift panel down using offset
+                offsetHeight = menuStrip1.Size.Height;
+                availableHeight -= offsetHeight;
             }
-            else
+
+            // Maintain aspect ratio?
+            if (maintainAspectRatioToolStripMenuItem.Checked)
             {
-                // Calculate width & height that we can maximally occupy
-                int availableHeight = this.ClientSize.Height - menuStrip1.Size.Height;
-                int availableWidth = this.ClientSize.Width;
+                // Calculate aspect ratio of source
+                float aspectRatio = (float)frameSize.Width / frameSize.Height;
 
-                // Maintain aspect ratio?
-                if (maintainAspectRatioToolStripMenuItem.Checked)
+                // Do we need to create horizontal or vertical bars?
+                if (availableHeight * aspectRatio < availableWidth)
                 {
-                    // Calculate aspect ratio of source
-                    float aspectRatio = (float)frameSize.Width / frameSize.Height;
-
-                    // Do we need to create horizontal or vertical bars?
-                    if (availableHeight * aspectRatio < availableWidth)
+                    // There is enough width to maintain the aspect ratio of the source
+                    if (scaleToFitWindowToolStripMenuItem.Checked)
                     {
-                        // There is enough width to maintain the aspect ratio of the source
-                        if (scaleToFitWindowToolStripMenuItem.Checked)
-                        {
-                            float scalingFactor = (float)frameSize.Height / availableHeight;
-                            int newWidth = (int)Math.Floor((float)frameSize.Width / scalingFactor);
-                            // Create vertical bars
-                            panel1.Location = new Point((availableWidth - newWidth) / 2, menuStrip1.Size.Height);
-                            panel1.Width = newWidth;
-                            panel1.Height = availableHeight;
+                        float scalingFactor = (float)frameSize.Height / availableHeight;
+                        int newWidth = (int)Math.Floor((float)frameSize.Width / scalingFactor);
+                        // Create vertical bars
+                        panel1.Location = new Point((availableWidth - newWidth) / 2, offsetHeight);
+                        panel1.Width = newWidth;
+                        panel1.Height = availableHeight;
 
-                        }
-                        else
-                        {
-                            float scalingFactor = (float)frameSize.Width / availableWidth;
-                            int newHeight = (int)Math.Floor((float)frameSize.Height / scalingFactor);
-                            // NO scale to fit, so we need to shift the video VERTICALLY (Y) to the center of the window
-                            // i.e. zoom panel
-                            panel1.Location = new Point(0, menuStrip1.Size.Height + (availableHeight - newHeight) / 2);
-                            panel1.Width = availableWidth;
-                            panel1.Height = newHeight;
-                        }
                     }
                     else
                     {
-                        // There is not enough width to maintain the aspect ratio of the source
-                        if (scaleToFitWindowToolStripMenuItem.Checked)
-                        {
-                            float scalingFactor = (float)frameSize.Width / availableWidth;
-                            int newHeight = (int)Math.Floor((float)frameSize.Height / scalingFactor);
-                            // NO scale to fit, so we need to shift the video VERTICALLY (Y) to the center of the window
-                            // i.e. zoom panel
-                            panel1.Location = new Point(0, menuStrip1.Size.Height + (availableHeight - newHeight) / 2);
-                            panel1.Width = availableWidth;
-                            panel1.Height = newHeight;
-                        }
-                        else
-                        {
-                            float scalingFactor = (float)frameSize.Height / availableHeight;
-                            int newWidth = (int)Math.Floor((float)frameSize.Width / scalingFactor);
-                            // Create horizontal bars
-                            panel1.Location = new Point((availableWidth - newWidth) / 2, menuStrip1.Size.Height);
-                            panel1.Width = newWidth;
-                            panel1.Height = availableHeight;
-                        }
-
-
+                        float scalingFactor = (float)frameSize.Width / availableWidth;
+                        int newHeight = (int)Math.Floor((float)frameSize.Height / scalingFactor);
+                        // NO scale to fit, so we need to shift the video VERTICALLY (Y) to the center of the window
+                        // i.e. zoom panel
+                        panel1.Location = new Point(0, offsetHeight + (availableHeight - newHeight) / 2);
+                        panel1.Width = availableWidth;
+                        panel1.Height = newHeight;
                     }
-
                 }
                 else
                 {
-                    // Just rescale panel
-                    panel1.Location = new Point(0, menuStrip1.Size.Height);
-                    panel1.Width = availableWidth;
-                    panel1.Height = availableHeight;
+                    // There is not enough width to maintain the aspect ratio of the source
+                    if (scaleToFitWindowToolStripMenuItem.Checked)
+                    {
+                        float scalingFactor = (float)frameSize.Width / availableWidth;
+                        int newHeight = (int)Math.Floor((float)frameSize.Height / scalingFactor);
+                        // NO scale to fit, so we need to shift the video VERTICALLY (Y) to the center of the window
+                        // i.e. zoom panel
+                        panel1.Location = new Point(0, offsetHeight + (availableHeight - newHeight) / 2);
+                        panel1.Width = availableWidth;
+                        panel1.Height = newHeight;
+                    }
+                    else
+                    {
+                        float scalingFactor = (float)frameSize.Height / availableHeight;
+                        int newWidth = (int)Math.Floor((float)frameSize.Width / scalingFactor);
+                        // Create horizontal bars
+                        panel1.Location = new Point((availableWidth - newWidth) / 2, offsetHeight);
+                        panel1.Width = newWidth;
+                        panel1.Height = availableHeight;
+                    }
+
+
                 }
+
+            }
+            else
+            {
+                // Just rescale panel
+                panel1.Location = new Point(0, offsetHeight);
+                panel1.Width = availableWidth;
+                panel1.Height = availableHeight;
             }
             panel1.Refresh();
         }
@@ -319,6 +320,7 @@ namespace MyWebCam
 
         private void toggleWindowStyle(object sender, EventArgs e)
         {
+            this.SuspendLayout();
 
             Boolean newState = !minimalisticStyleToolStripMenuItem.Checked;
             minimalisticStyleToolStripMenuItem.Checked = newState;
@@ -327,18 +329,37 @@ namespace MyWebCam
                 oldPos = this.Location;
                 oldSize = this.Size;
 
-                this.SuspendLayout();
                 // Ensure that webcam view stays on the same location -> new window has to match the current's panel position
-                Rectangle rc = panel1.RectangleToScreen(panel1.ClientRectangle);
-                this.Location = new Point(rc.Left, rc.Top);
-                this.Size = new Size(this.Width, this.Height - menuStrip1.Size.Height);
-                panel1.Location = new Point(0, 0);
+                Rectangle rcPanel = panel1.RectangleToScreen(panel1.ClientRectangle);
+                Rectangle rcForm = RectangleToScreen(this.ClientRectangle);
 
+                // Check if we are showing the entire panel, or if clipping occurs
+                if ((panel1.Left >= 0) && (panel1.Top >= 0))
+                {
+                    // No clipping, so new location & size of the FORM are equal to that of the PANEL
+                    this.Location = new Point(rcPanel.Left, rcPanel.Top);
+                    this.ClientSize = new Size(rcPanel.Width, rcPanel.Height);     // This triggers a repositioning of the panel through the resize event
+                } else
+                {
+                    // Clipping occurs, so new location & size of the FORM are that of the current form for the clipped direction
+                    if (panel1.Left < 0)
+                    {
+                        // We are clipping in the HORIZONTAL direction
+                        this.Location = new Point(rcForm.Left, rcPanel.Top);
+                        this.ClientSize = new Size(rcForm.Width, rcPanel.Height);
+                    }
+                    else
+                    {
+                        // We are clipping in the VERTICAL direction
+                        this.Location = new Point(rcPanel.Left, rcForm.Top + menuStrip1.Height);
+                        this.ClientSize = new Size(rcPanel.Width, rcForm.Height - menuStrip1.Height);
+                    }
+                }
+
+                //this.Size = new Size(this.Width, this.Height - menuStrip1.Size.Height);     // This triggers a repositioning of the panel through the resize event
                 //this.Location = new Point(this.Location.X + (this.Size.Width - this.ClientSize.Width - 2* SystemInformation.Border3DSize.Width -1), this.Location.Y + (this.Size.Height - this.ClientSize.Height - 2*SystemInformation.Border3DSize.Height) -1);
 
                 this.FormBorderStyle = FormBorderStyle.None;
-
-                // Resize to panel size
 
                 menuStrip1.Visible = false;
                 resolutionBox.Visible = false;
@@ -348,16 +369,13 @@ namespace MyWebCam
                 {
                     btnArray[i].Visible = false;
                 }
-                this.ResumeLayout();
             }
             else
             {
-                this.SuspendLayout();
                 // Restore window size & position
                 this.FormBorderStyle = FormBorderStyle.Sizable;
                 this.Location = oldPos;
-                this.Size = oldSize;
-                panel1.Location = new Point(0, menuStrip1.Size.Height);
+                this.Size = oldSize;                // This triggers a repositioning of the panel through the resize event
                 menuStrip1.Visible = true;
                 resolutionBox.Visible = true;
                 // Show all buttons
@@ -365,8 +383,8 @@ namespace MyWebCam
                 {
                     btnArray[i].Visible = true;
                 }
-                this.ResumeLayout();
             }
+            this.ResumeLayout();
         }
 
         private void toggleAspectRatio(object sender, EventArgs e)
@@ -384,14 +402,13 @@ namespace MyWebCam
 
         private void aboutWindow(object sender, EventArgs e)
         {
-            MessageBox.Show("SimpleCam v1.0" + Environment.NewLine + Environment.NewLine + "Written in 2016 by Tim Jacobs" + Environment.NewLine,"SimpleCam v1.0", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("SimpleCam v1.1" + Environment.NewLine + Environment.NewLine + "Written in 2016 by Tim Jacobs" + Environment.NewLine,"SimpleCam v1.0", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void exitProgram(object sender, EventArgs e)
         {
             this.Close();
         }
-
 
     }
 }
